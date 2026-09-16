@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B Baby — Trust &amp; Safety Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#08090d;
+    --panel:#111319;
+    --panel-2:#161923;
+    --steel:#3a4152;
+    --steel-light:#8b93a6;
+    --fog:#c7ccd6;
+    --paper:#e9e8e2;
+    --signal:#f2c744;
+    --signal-dim:#a8862c;
+    --alert:#8f1f2b;
+    --rule: rgba(242,199,68,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--void);
+    color:var(--fog);
+    font-family:'Barlow', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Cinzel', serif;
+    letter-spacing:0.01em;
+    color:var(--paper);
+    margin:0;
+  }
+  .eyebrow{
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:600;
+    font-size:0.85rem;
+    letter-spacing:0.14em;
+    color:var(--signal-dim);
+  }
+  a{color:var(--signal);}
+  ::selection{background:var(--signal);color:#08090d;}
+
+  /* ---------- background bat texture ---------- */
+  .sky{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background:
+      radial-gradient(1200px 800px at 50% -10%, rgba(242,199,68,0.10), transparent 60%),
+      linear-gradient(180deg, #0a0c12 0%, #08090d 45%, #060709 100%);
+  }
+  .drizzle{
+    position:fixed; inset:0; z-index:-1; opacity:0.5;
+    background-image: repeating-linear-gradient(115deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 120px);
+  }
+
+  section{
+    max-width:920px;
+    margin:0 auto;
+    padding:96px 32px;
+    position:relative;
+  }
+  .rule{
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--rule), transparent);
+    max-width:920px;
+    margin:0 auto;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:32px;
+    position:relative;
+    overflow:hidden;
+  }
+  .signal-beam{
+    position:absolute;
+    top:-30%;
+    left:50%;
+    transform:translateX(-50%);
+    width:1400px;
+    height:1400px;
+    background:
+      radial-gradient(circle at center, rgba(242,199,68,0.16) 0%, rgba(242,199,68,0.07) 22%, transparent 55%);
+    pointer-events:none;
+    animation:flicker 7s ease-in-out infinite;
+  }
+  @keyframes flicker{
+    0%,100%{opacity:1;}
+    47%{opacity:1;}
+    48%{opacity:0.75;}
+    49%{opacity:1;}
+    72%{opacity:1;}
+    73%{opacity:0.85;}
+    74%{opacity:1;}
+  }
+  .bat-mark{
+    width:64px;
+    height:34px;
+    margin-bottom:28px;
+    opacity:0.92;
+  }
+  .hero .eyebrow{margin-bottom:18px;}
+  .hero h1{
+    font-size:clamp(2.6rem, 7vw, 5.2rem);
+    font-weight:800;
+    line-height:1.05;
+  }
+  .hero .role{
+    margin-top:22px;
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:clamp(1.05rem, 2.4vw, 1.35rem);
+    font-weight:500;
+    color:var(--steel-light);
+    max-width:560px;
+  }
+  .hero .role strong{color:var(--fog); font-weight:600;}
+  .scroll-cue{
+    position:absolute;
+    bottom:40px;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.2em;
+    color:var(--steel);
+  }
+
+  /* ---------- Section headings ---------- */
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:18px;
+    margin-bottom:44px;
+  }
+  .section-num{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.85rem;
+    color:var(--steel);
+    letter-spacing:0.1em;
+  }
+  .section-head h2{
+    font-size:clamp(1.5rem, 3.4vw, 2rem);
+  }
+
+  /* ---------- Dossier / summary ---------- */
+  .dossier{
+    background:linear-gradient(180deg, var(--panel), var(--panel-2));
+    border:1px solid rgba(242,199,68,0.10);
+    border-left:3px solid var(--signal);
+    border-radius:2px;
+    padding:34px 38px;
+  }
+  .dossier p{
+    font-size:1.06rem;
+    line-height:1.75;
+    color:var(--fog);
+    margin:0 0 14px;
+  }
+  .dossier p:last-child{margin-bottom:0;}
+  .field-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));
+    gap:18px 28px;
+    margin-top:28px;
+    padding-top:26px;
+    border-top:1px solid rgba(255,255,255,0.06);
+  }
+  .field{
+    font-family:'Barlow Condensed', sans-serif;
+  }
+  .field .k{
+    font-size:0.75rem;
+    letter-spacing:0.12em;
+    color:var(--steel-light);
+    margin-bottom:4px;
+  }
+  .field .v{
+    font-size:1rem;
+    color:var(--paper);
+    font-weight:500;
+  }
+
+  /* ---------- Case files (experience) ---------- */
+  .case{
+    position:relative;
+    padding-left:38px;
+    padding-bottom:52px;
+    border-left:1px solid rgba(242,199,68,0.18);
+  }
+  .case:last-child{padding-bottom:0;}
+  .case::before{
+    content:"";
+    position:absolute;
+    left:-6px;
+    top:4px;
+    width:11px;
+    height:11px;
+    background:var(--void);
+    border:2px solid var(--signal);
+    border-radius:50%;
+  }
+  .case-top{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:8px 20px;
+    margin-bottom:6px;
+  }
+  .case-org{
+    font-family:'Cinzel', serif;
+    font-size:1.18rem;
+    color:var(--paper);
+    font-weight:600;
+  }
+  .case-date{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.85rem;
+    color:var(--signal-dim);
+    letter-spacing:0.06em;
+    white-space:nowrap;
+  }
+  .case-role{
+    font-size:0.98rem;
+    color:var(--steel-light);
+    margin-bottom:14px;
+    font-style:italic;
+  }
+  .case ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .case li{
+    font-size:0.97rem;
+    line-height:1.65;
+    color:var(--fog);
+    margin-bottom:9px;
+  }
+  .case li::marker{color:var(--signal-dim);}
+
+  /* ---------- Utility belt (skills) ---------- */
+  .belt{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));
+    gap:14px;
+  }
+  .belt-item{
+    background:var(--panel);
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:2px;
+    padding:20px 22px;
+  }
+  .belt-item .k{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    color:var(--signal-dim);
+    margin-bottom:8px;
+  }
+  .belt-item .v{
+    font-size:0.98rem;
+    color:var(--paper);
+    line-height:1.5;
+  }
+
+  /* ---------- Two column: education + languages ---------- */
+  .split{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:56px;
+  }
+  @media (max-width:680px){
+    .split{grid-template-columns:1fr; gap:40px;}
+  }
+  .edu-card h3{
+    font-size:1.15rem;
+    margin-bottom:6px;
+  }
+  .edu-card .sub{
+    font-family:'Barlow Condensed', sans-serif;
+    color:var(--steel-light);
+    font-size:0.95rem;
+    margin-bottom:14px;
+  }
+  .edu-line{
+    display:flex;
+    justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    font-size:0.94rem;
+  }
+  .edu-line span:first-child{color:var(--steel-light);}
+  .edu-line span:last-child{color:var(--paper);}
+
+  .tag-row{display:flex; flex-wrap:wrap; gap:10px;}
+  .tag{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.85rem;
+    letter-spacing:0.04em;
+    color:var(--fog);
+    border:1px solid rgba(242,199,68,0.25);
+    padding:7px 14px;
+    border-radius:2px;
+  }
+
+  /* ---------- Signal / contact ---------- */
+  .signal-block{
+    text-align:center;
+    padding-top:70px;
+    padding-bottom:90px;
+  }
+  .signal-block .eyebrow{display:block; margin-bottom:16px;}
+  .signal-block h2{
+    font-size:clamp(1.8rem, 4.4vw, 2.6rem);
+    margin-bottom:20px;
+  }
+  .signal-block p.lede{
+    max-width:480px;
+    margin:0 auto 40px;
+    color:var(--steel-light);
+    font-size:1.02rem;
+    line-height:1.7;
+  }
+  .contact-list{
+    display:inline-flex;
+    flex-direction:column;
+    gap:16px;
+    text-align:left;
+  }
+  .contact-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-size:1.05rem;
+  }
+  .contact-row .k{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    color:var(--steel-light);
+    width:96px;
+    flex-shrink:0;
+  }
+  .contact-row a, .contact-row span.v{
+    color:var(--paper);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+  }
+  .contact-row a:hover{
+    color:var(--signal);
+    border-bottom-color:var(--signal);
+  }
+
+  footer{
+    text-align:center;
+    padding:34px 20px 46px;
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    color:var(--steel);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .signal-beam{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  :focus-visible{
+    outline:2px solid var(--signal);
+    outline-offset:3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<div class="drizzle"></div>
+
+<!-- HERO -->
+<section class="hero" aria-label="Introduction">
+  <div class="signal-beam" aria-hidden="true"></div>
+  <svg class="bat-mark" viewBox="0 0 100 52" aria-hidden="true">
+    <path fill="#f2c744" d="M50 2c2 5 3 9 3 13 6-6 14-9 22-9-3 6-5 10-5 14 8-1 15 1 20 6-6 1-11 3-14 7 6 2 10 6 12 11-7-2-13-2-18 0 3 5 4 10 3 16-5-6-10-10-16-12 1 6-1 11-4 16-2-6-6-10-10-13-1 3-2 6-3 10-1-4-2-7-3-10-4 3-8 7-10 13-3-5-5-10-4-16-6 2-11 6-16 12-1-6 0-11 3-16-5-2-11-2-18 0 2-5 6-9 12-11-3-4-8-6-14-7 5-5 12-7 20-6 0-4-2-8-5-14 8 0 16 3 22 9 0-4 1-8 3-13z"/>
+  </svg>
+  <p class="eyebrow">CONFIDENTIAL &nbsp;·&nbsp; GOTHAM DIGITAL SECURITY DIVISION</p>
+  <h1>B&nbsp;BABY</h1>
+  <p class="role">Trust &amp; Safety Analyst — <strong>six years</strong> spent watching the platforms so users don't have to. Content moderation, policy enforcement, and the quiet work of keeping bad actors out.</p>
+  <div class="scroll-cue">SCROLL FOR THE FILE ↓</div>
+</section>
+
+<div class="rule"></div>
+
+<!-- DOSSIER -->
+<section aria-labelledby="dossier-heading">
+  <div class="section-head">
+    <span class="section-num">01</span>
+    <h2 id="dossier-heading">The Dossier</h2>
+  </div>
+  <div class="dossier">
+    <p>Every city needs someone watching its rooftops. Every platform needs someone watching its edge cases — the accounts pushing spyware, the posts hiding harassment, the apps quietly leaking data users never agreed to share. That's the work: unglamorous, constant, and necessary.</p>
+    <p>Six years in trust &amp; safety and content moderation across app review, user-generated content, and video platforms, with hands-on experience enforcing policy on PII exposure, spyware, adult content, child safety, hate speech, fraud, and impersonation — and mentoring the next analysts who take up the watch.</p>
+    <div class="field-grid">
+      <div class="field"><div class="k">BASE OF OPERATIONS</div><div class="v">Krishnagiri, Tamil Nadu</div></div>
+      <div class="field"><div class="k">YEARS ON THE JOB</div><div class="v">6</div></div>
+      <div class="field"><div class="k">CURRENT STATUS</div><div class="v">Open to new assignments</div></div>
+      <div class="field"><div class="k">LANGUAGES</div><div class="v">English, Tamil, Kannada, Telugu</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- CASE FILES -->
+<section aria-labelledby="cases-heading">
+  <div class="section-head">
+    <span class="section-num">02</span>
+    <h2 id="cases-heading">Case Files</h2>
+  </div>
+
+  <div class="case">
+    <div class="case-top">
+      <span class="case-org">Accenture Solutions Pvt Ltd</span>
+      <span class="case-date">NOV 2022 — MAY 2025</span>
+    </div>
+    <div class="case-role">Trust &amp; Safety Analyst</div>
+    <ul>
+      <li>Reviewed and actioned Android applications against client policy to keep the platform secure for users.</li>
+      <li>Approved, blocked, or rejected apps violating policy — including PII exposure without consent and spyware functionality.</li>
+      <li>Handled client escalations and briefed developers on violations, guiding them to publish compliant versions to the Play Store.</li>
+      <li>Worked with the data management team to keep datasets organized and data integrity intact.</li>
+      <li>Represented annotation progress and challenges in weekly SOC meetings with team members and leads.</li>
+      <li>Trained incoming team members on data annotation procedures.</li>
+    </ul>
+  </div>
+
+  <div class="case">
+    <div class="case-top">
+      <span class="case-org">Genpact India Pvt Ltd</span>
+      <span class="case-date">MAR 2021 — NOV 2022</span>
+    </div>
+    <div class="case-role">Process Associate / Language Specialist — Content Moderator</div>
+    <ul>
+      <li>Reviewed user-generated posts, photos, video, and comments to keep the community safe per platform standards.</li>
+      <li>Handled high-priority escalations across adult nudity, child safety, violent content, spam, fraud, bullying, and hate speech policies.</li>
+      <li>Reviewed fake and private impersonation cases against name policy, and moderated in-chat user messages for market violations.</li>
+      <li>Resolved user inquiries with empathy and accuracy, and flagged workflow improvements upstream.</li>
+    </ul>
+  </div>
+
+  <div class="case">
+    <div class="case-top">
+      <span class="case-org">Coxswain Technologies Ltd (SHAREit)</span>
+      <span class="case-date">DEC 2019 — NOV 2020</span>
+    </div>
+    <div class="case-role">Video Content Moderator &amp; Reviewer</div>
+    <ul>
+      <li>Audited video content against safety standards across multiple categories.</li>
+      <li>Evaluated short-form video against company guidelines and tagged it with accurate keywords.</li>
+      <li>Screened out sexual, vulgar, violent, and child-safety-related content to keep the feed clean.</li>
+      <li>Investigated and resolved issues flagged by users and by the system.</li>
+    </ul>
+  </div>
+
+  <div class="case">
+    <div class="case-top">
+      <span class="case-org">Bharat Broadband Network Ltd — Bangalore</span>
+      <span class="case-date">MAR 2018 — JUL 2019</span>
+    </div>
+    <div class="case-role">Network Support Engineer (Payroll: SISL Infotech Pvt Ltd)</div>
+    <ul>
+      <li>Configured, monitored, and troubleshot field and service issues on live infrastructure.</li>
+      <li>Troubleshot OLTs via GPON-EMS across UTL, ITI, L&amp;T, and Tejas equipment.</li>
+      <li>Managed login credentials and ran email/call support for users across India.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- UTILITY BELT -->
+<section aria-labelledby="belt-heading">
+  <div class="section-head">
+    <span class="section-num">03</span>
+    <h2 id="belt-heading">The Utility Belt</h2>
+  </div>
+  <div class="belt">
+    <div class="belt-item"><div class="k">POLICY ENFORCEMENT</div><div class="v">PII &amp; spyware detection, app policy review, escalation handling</div></div>
+    <div class="belt-item"><div class="k">CONTENT MODERATION</div><div class="v">Adult content, child safety, hate speech, fraud, harassment, impersonation</div></div>
+    <div class="belt-item"><div class="k">TEAM &amp; PROCESS</div><div class="v">New-hire training, data integrity, SOC reporting, workflow improvement</div></div>
+    <div class="belt-item"><div class="k">REMOTE TOOLS</div><div class="v">AnyDesk, TeamViewer, Skype</div></div>
+    <div class="belt-item"><div class="k">SYSTEMS</div><div class="v">Windows 7 / 8 / 10</div></div>
+    <div class="belt-item"><div class="k">TRAINING</div><div class="v">NMS Training — C-DOT, Bangalore</div></div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- EDUCATION + LANGUAGES -->
+<section aria-labelledby="record-heading">
+  <div class="section-head">
+    <span class="section-num">04</span>
+    <h2 id="record-heading">On Record</h2>
+  </div>
+  <div class="split">
+    <div class="edu-card">
+      <h3>Bachelor of Engineering</h3>
+      <p class="sub">Electronics and Communication</p>
+      <div class="edu-line"><span>College</span><span>Adhiyamaan College of Engineering</span></div>
+      <div class="edu-line"><span>University</span><span>Anna University</span></div>
+      <div class="edu-line" style="border-bottom:none;"><span>Certification</span><span>NMS Training, C-DOT Bangalore</span></div>
+    </div>
+    <div>
+      <h3 style="font-size:1.15rem; margin-bottom:14px;">Off Duty</h3>
+      <div class="tag-row">
+        <span class="tag">Reading</span>
+        <span class="tag">Music</span>
+        <span class="tag">Dancing</span>
+        <span class="tag">Gardening</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNAL / CONTACT -->
+<section class="signal-block" aria-labelledby="signal-heading">
+  <span class="eyebrow">RAISE THE SIGNAL</span>
+  <h2 id="signal-heading">Get In Touch</h2>
+  <p class="lede">Hiring for trust &amp; safety, content moderation, or platform policy? The line is open.</p>
+  <div class="contact-list">
+    <div class="contact-row"><span class="k">EMAIL</span><a href="mailto:babybeece12@gmail.com">babybeece12@gmail.com</a></div>
+    <div class="contact-row"><span class="k">PHONE</span><span class="v">+91 81483 65607</span></div>
+    <div class="contact-row"><span class="k">LINKEDIN</span><a href="https://www.linkedin.com/in/baby-b-251669132/" target="_blank" rel="noopener">linkedin.com/in/baby-b-251669132</a></div>
+    <div class="contact-row"><span class="k">LOCATION</span><span class="v">Krishnagiri, Tamil Nadu, India</span></div>
+  </div>
+</section>
+
+<footer>GOTHAM DIGITAL SECURITY DIVISION &nbsp;·&nbsp; FILE CLOSED</footer>
+
+</body>
+</html>
