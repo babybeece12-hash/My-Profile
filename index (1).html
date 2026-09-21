@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B Baby — Trust &amp; Safety Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b0b10;
+    --paper:#f4f1e8;
+    --web-blue:#132a7a;
+    --web-blue-deep:#0a1a54;
+    --spidey-red:#d6202b;
+    --white:#f7f5ee;
+    --grey:#6b7086;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Barlow', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Bangers', cursive;
+    letter-spacing:0.02em;
+    font-weight:400;
+    color:var(--ink);
+    margin:0;
+  }
+  .eyebrow{
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:600;
+    font-size:0.85rem;
+    letter-spacing:0.12em;
+    color:var(--spidey-red);
+  }
+  a{color:var(--web-blue);}
+  ::selection{background:var(--spidey-red); color:var(--white);}
+
+  .halftone{
+    position:fixed; inset:0; z-index:-2;
+    background-color:var(--paper);
+    background-image: radial-gradient(var(--ink) 1px, transparent 1.2px);
+    background-size:16px 16px;
+    opacity:0.05;
+  }
+  .web-corner{
+    position:fixed;
+    top:0; left:0;
+    width:520px; height:520px;
+    z-index:-1;
+    opacity:0.10;
+    pointer-events:none;
+  }
+
+  section{
+    max-width:920px;
+    margin:0 auto;
+    padding:88px 32px;
+    position:relative;
+  }
+  .rule{
+    height:6px;
+    background:repeating-linear-gradient(90deg, var(--ink) 0 26px, transparent 26px 40px);
+    opacity:0.9;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:32px;
+    background:
+      radial-gradient(1100px 700px at 50% -8%, rgba(214,32,43,0.10), transparent 60%),
+      linear-gradient(180deg, var(--web-blue-deep) 0%, var(--web-blue) 55%, #1c3aa0 100%);
+    color:var(--white);
+    overflow:hidden;
+    position:relative;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 90px),
+      repeating-linear-gradient(25deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 90px);
+    mix-blend-mode:overlay;
+    pointer-events:none;
+  }
+  .mask-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--spidey-red);
+    color:var(--white);
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:700;
+    font-size:0.8rem;
+    letter-spacing:0.14em;
+    padding:8px 18px;
+    border-radius:999px;
+    margin-bottom:26px;
+    box-shadow:0 3px 0 rgba(0,0,0,0.25);
+  }
+  .hero h1{
+    font-size:clamp(3rem, 9vw, 6.4rem);
+    line-height:0.95;
+    color:var(--white);
+    text-shadow:
+      3px 3px 0 var(--spidey-red),
+      6px 6px 0 rgba(0,0,0,0.35);
+  }
+  .hero .role{
+    margin-top:26px;
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:clamp(1.05rem, 2.4vw, 1.4rem);
+    font-weight:500;
+    color:#d7deff;
+    max-width:580px;
+  }
+  .hero .role strong{color:var(--white); font-weight:700;}
+  .scroll-cue{
+    position:absolute;
+    bottom:40px;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.2em;
+    color:rgba(255,255,255,0.6);
+  }
+
+  /* ---------- Section headers ---------- */
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom:40px;
+  }
+  .section-tag{
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:700;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    color:var(--white);
+    background:var(--ink);
+    padding:5px 12px;
+    border-radius:3px;
+  }
+  .section-head h2{
+    font-size:clamp(1.9rem, 4.4vw, 2.6rem);
+    color:var(--web-blue);
+  }
+
+  /* ---------- Origin / summary panel (comic panel) ---------- */
+  .panel{
+    background:var(--white);
+    border:3px solid var(--ink);
+    box-shadow:8px 8px 0 var(--ink);
+    padding:34px 38px;
+    border-radius:2px;
+  }
+  .panel p{
+    font-size:1.06rem;
+    line-height:1.75;
+    margin:0 0 14px;
+  }
+  .panel p:last-child{margin-bottom:0;}
+  .field-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));
+    gap:18px 28px;
+    margin-top:26px;
+    padding-top:24px;
+    border-top:2px dashed var(--ink);
+  }
+  .field .k{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.75rem;
+    letter-spacing:0.1em;
+    color:var(--spidey-red);
+    margin-bottom:4px;
+    font-weight:700;
+  }
+  .field .v{font-size:1rem; font-weight:600;}
+
+  /* ---------- Mission log (experience) ---------- */
+  .mission{
+    position:relative;
+    background:var(--white);
+    border:3px solid var(--ink);
+    border-radius:2px;
+    padding:26px 30px;
+    margin-bottom:26px;
+    box-shadow:6px 6px 0 var(--ink);
+  }
+  .mission:last-child{margin-bottom:0;}
+  .mission-top{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:8px 20px;
+    margin-bottom:4px;
+    padding-bottom:10px;
+    border-bottom:2px solid var(--ink);
+  }
+  .mission-org{
+    font-family:'Bangers', cursive;
+    font-size:1.5rem;
+    color:var(--web-blue);
+    letter-spacing:0.01em;
+  }
+  .mission-date{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.85rem;
+    font-weight:700;
+    color:var(--spidey-red);
+    letter-spacing:0.05em;
+    white-space:nowrap;
+  }
+  .mission-role{
+    font-size:0.98rem;
+    color:var(--grey);
+    margin:10px 0 14px;
+    font-style:italic;
+    font-weight:500;
+  }
+  .mission ul{margin:0; padding-left:18px;}
+  .mission li{
+    font-size:0.97rem;
+    line-height:1.65;
+    margin-bottom:9px;
+  }
+  .mission li::marker{color:var(--spidey-red);}
+
+  /* ---------- Web-shooters (skills) ---------- */
+  .web-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));
+    gap:16px;
+  }
+  .web-item{
+    background:var(--ink);
+    color:var(--white);
+    border-radius:2px;
+    padding:20px 22px;
+    border:2px solid var(--ink);
+  }
+  .web-item .k{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    color:#ff5c63;
+    margin-bottom:8px;
+    font-weight:700;
+  }
+  .web-item .v{font-size:0.98rem; line-height:1.5; color:var(--paper);}
+
+  /* ---------- Education + off duty ---------- */
+  .split{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:56px;
+  }
+  @media (max-width:680px){ .split{grid-template-columns:1fr; gap:40px;} }
+  .edu-card{
+    background:var(--white);
+    border:3px solid var(--ink);
+    box-shadow:6px 6px 0 var(--ink);
+    padding:26px 28px;
+  }
+  .edu-card h3{
+    font-size:1.4rem;
+    color:var(--web-blue);
+    margin-bottom:4px;
+  }
+  .edu-card .sub{
+    font-family:'Barlow Condensed', sans-serif;
+    color:var(--grey);
+    font-size:0.95rem;
+    margin-bottom:16px;
+    font-weight:600;
+  }
+  .edu-line{
+    display:flex;
+    justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px dashed rgba(11,11,16,0.2);
+    font-size:0.94rem;
+  }
+  .edu-line:last-child{border-bottom:none;}
+  .edu-line span:first-child{color:var(--grey); font-weight:600;}
+  .edu-line span:last-child{font-weight:600;}
+
+  .tag-row{display:flex; flex-wrap:wrap; gap:10px;}
+  .tag{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.85rem;
+    font-weight:700;
+    letter-spacing:0.02em;
+    color:var(--white);
+    background:var(--spidey-red);
+    padding:8px 16px;
+    border-radius:999px;
+  }
+
+  /* ---------- Contact / web signal ---------- */
+  .signal-block{
+    background:
+      radial-gradient(900px 500px at 50% -10%, rgba(214,32,43,0.14), transparent 60%),
+      linear-gradient(180deg, var(--web-blue-deep) 0%, var(--web-blue) 100%);
+    color:var(--white);
+    text-align:center;
+    padding:90px 32px;
+  }
+  .signal-block .eyebrow{color:#ff8a90; display:block; margin-bottom:16px;}
+  .signal-block h2{
+    font-size:clamp(2.2rem, 5.6vw, 3.2rem);
+    color:var(--white);
+    margin-bottom:18px;
+    text-shadow:2px 2px 0 var(--spidey-red);
+  }
+  .signal-block p.lede{
+    max-width:480px;
+    margin:0 auto 40px;
+    color:#c9d1f5;
+    font-size:1.02rem;
+    line-height:1.7;
+  }
+  .contact-list{
+    display:inline-flex;
+    flex-direction:column;
+    gap:16px;
+    text-align:left;
+  }
+  .contact-row{display:flex; align-items:center; gap:14px; font-size:1.05rem;}
+  .contact-row .k{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    color:#a9b3e6;
+    width:96px;
+    flex-shrink:0;
+  }
+  .contact-row a, .contact-row span.v{
+    color:var(--white);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+  }
+  .contact-row a:hover{ color:#ff8a90; border-bottom-color:#ff8a90; }
+
+  footer{
+    text-align:center;
+    padding:30px 20px 40px;
+    background:var(--ink);
+    color:var(--grey);
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+  }
+
+  :focus-visible{ outline:3px solid var(--spidey-red); outline-offset:3px; }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+</style>
+</head>
+<body>
+
+<div class="halftone"></div>
+<svg class="web-corner" viewBox="0 0 200 200" aria-hidden="true">
+  <g stroke="#0b0b10" stroke-width="1" fill="none">
+    <path d="M0,0 L200,0"/><path d="M0,0 L0,200"/>
+    <path d="M0,0 L200,200"/><path d="M0,0 L160,0"/><path d="M0,0 L0,160"/>
+    <path d="M0,0 L120,0"/><path d="M0,0 L0,120"/>
+    <path d="M0,20 Q40,10 60,0"/><path d="M0,50 Q60,30 100,0"/><path d="M0,90 Q90,60 140,0"/>
+    <path d="M0,140 Q120,90 190,10"/><path d="M20,0 Q10,40 0,60"/><path d="M50,0 Q30,60 0,100"/>
+    <path d="M90,0 Q60,90 0,140"/>
+  </g>
+</svg>
+
+<!-- HERO -->
+<section class="hero" aria-label="Introduction">
+  <span class="mask-badge">FRIENDLY NEIGHBORHOOD TRUST &amp; SAFETY</span>
+  <h1>B&nbsp;BABY</h1>
+  <p class="role">Trust &amp; Safety Analyst — <strong>six years</strong> on patrol across apps, videos and community posts, catching the stuff that shouldn't get through before it reaches anyone.</p>
+  <div class="scroll-cue">SWING DOWN ↓</div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ORIGIN STORY -->
+<section aria-labelledby="origin-heading">
+  <div class="section-head">
+    <span class="section-tag">01</span>
+    <h2 id="origin-heading">Origin Story</h2>
+  </div>
+  <div class="panel">
+    <p>Every neighborhood has corners nobody's watching — the app that quietly leaks contact lists, the account posting what it shouldn't, the chat message one report away from someone getting hurt. Somebody has to be there first.</p>
+    <p>Six years in trust &amp; safety and content moderation across app review, user-generated content, and video platforms — enforcing policy on PII exposure, spyware, adult content, child safety, hate speech, fraud, and impersonation, and training the next analysts to take up the watch.</p>
+    <div class="field-grid">
+      <div class="field"><div class="k">HOME BASE</div><div class="v">Krishnagiri, Tamil Nadu</div></div>
+      <div class="field"><div class="k">YEARS ON PATROL</div><div class="v">6</div></div>
+      <div class="field"><div class="k">STATUS</div><div class="v">Open to new assignments</div></div>
+      <div class="field"><div class="k">LANGUAGES</div><div class="v">English, Tamil, Kannada, Telugu</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- MISSION LOG -->
+<section aria-labelledby="mission-heading">
+  <div class="section-head">
+    <span class="section-tag">02</span>
+    <h2 id="mission-heading">Mission Log</h2>
+  </div>
+
+  <div class="mission">
+    <div class="mission-top">
+      <span class="mission-org">Accenture Solutions Pvt Ltd</span>
+      <span class="mission-date">NOV 2022 — MAY 2025</span>
+    </div>
+    <div class="mission-role">Trust &amp; Safety Analyst</div>
+    <ul>
+      <li>Reviewed and actioned Android applications against client policy to keep the platform secure for users.</li>
+      <li>Approved, blocked, or rejected apps violating policy — including PII exposure without consent and spyware functionality.</li>
+      <li>Handled client escalations and briefed developers on violations, guiding them to publish compliant versions to the Play Store.</li>
+      <li>Worked with the data management team to keep datasets organized and data integrity intact.</li>
+      <li>Represented annotation progress and challenges in weekly SOC meetings with team members and leads.</li>
+      <li>Trained incoming team members on data annotation procedures.</li>
+    </ul>
+  </div>
+
+  <div class="mission">
+    <div class="mission-top">
+      <span class="mission-org">Genpact India Pvt Ltd</span>
+      <span class="mission-date">MAR 2021 — NOV 2022</span>
+    </div>
+    <div class="mission-role">Process Associate / Language Specialist — Content Moderator</div>
+    <ul>
+      <li>Reviewed user-generated posts, photos, video, and comments to keep the community safe per platform standards.</li>
+      <li>Handled high-priority escalations across adult nudity, child safety, violent content, spam, fraud, bullying, and hate speech policies.</li>
+      <li>Reviewed fake and private impersonation cases against name policy, and moderated in-chat user messages for market violations.</li>
+      <li>Resolved user inquiries with empathy and accuracy, and flagged workflow improvements upstream.</li>
+    </ul>
+  </div>
+
+  <div class="mission">
+    <div class="mission-top">
+      <span class="mission-org">Coxswain Technologies Ltd (SHAREit)</span>
+      <span class="mission-date">DEC 2019 — NOV 2020</span>
+    </div>
+    <div class="mission-role">Video Content Moderator &amp; Reviewer</div>
+    <ul>
+      <li>Audited video content against safety standards across multiple categories.</li>
+      <li>Evaluated short-form video against company guidelines and tagged it with accurate keywords.</li>
+      <li>Screened out sexual, vulgar, violent, and child-safety-related content to keep the feed clean.</li>
+      <li>Investigated and resolved issues flagged by users and by the system.</li>
+    </ul>
+  </div>
+
+  <div class="mission">
+    <div class="mission-top">
+      <span class="mission-org">Bharat Broadband Network Ltd — Bangalore</span>
+      <span class="mission-date">MAR 2018 — JUL 2019</span>
+    </div>
+    <div class="mission-role">Network Support Engineer (Payroll: SISL Infotech Pvt Ltd)</div>
+    <ul>
+      <li>Configured, monitored, and troubleshot field and service issues on live infrastructure.</li>
+      <li>Troubleshot OLTs via GPON-EMS across UTL, ITI, L&amp;T, and Tejas equipment.</li>
+      <li>Managed login credentials and ran email/call support for users across India.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- WEB-SHOOTERS -->
+<section aria-labelledby="web-heading">
+  <div class="section-head">
+    <span class="section-tag">03</span>
+    <h2 id="web-heading">Web-Shooters</h2>
+  </div>
+  <div class="web-grid">
+    <div class="web-item"><div class="k">POLICY ENFORCEMENT</div><div class="v">PII &amp; spyware detection, app policy review, escalation handling</div></div>
+    <div class="web-item"><div class="k">CONTENT MODERATION</div><div class="v">Adult content, child safety, hate speech, fraud, harassment, impersonation</div></div>
+    <div class="web-item"><div class="k">TEAM &amp; PROCESS</div><div class="v">New-hire training, data integrity, SOC reporting, workflow improvement</div></div>
+    <div class="web-item"><div class="k">REMOTE TOOLS</div><div class="v">AnyDesk, TeamViewer, Skype</div></div>
+    <div class="web-item"><div class="k">SYSTEMS</div><div class="v">Windows 7 / 8 / 10</div></div>
+    <div class="web-item"><div class="k">TRAINING</div><div class="v">NMS Training — C-DOT, Bangalore</div></div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- EDUCATION + OFF DUTY -->
+<section aria-labelledby="record-heading">
+  <div class="section-head">
+    <span class="section-tag">04</span>
+    <h2 id="record-heading">Field Notes</h2>
+  </div>
+  <div class="split">
+    <div class="edu-card">
+      <h3>Bachelor of Engineering</h3>
+      <p class="sub">Electronics and Communication</p>
+      <div class="edu-line"><span>College</span><span>Adhiyamaan College of Engineering</span></div>
+      <div class="edu-line"><span>University</span><span>Anna University</span></div>
+      <div class="edu-line"><span>Certification</span><span>NMS Training, C-DOT Bangalore</span></div>
+    </div>
+    <div>
+      <h3 style="font-size:1.4rem; color:var(--web-blue); margin-bottom:14px;">Off Duty</h3>
+      <div class="tag-row">
+        <span class="tag">Reading</span>
+        <span class="tag">Music</span>
+        <span class="tag">Dancing</span>
+        <span class="tag">Gardening</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNAL -->
+<section class="signal-block" aria-labelledby="signal-heading">
+  <span class="eyebrow">SEND THE SIGNAL</span>
+  <h2 id="signal-heading">Get In Touch</h2>
+  <p class="lede">Hiring for trust &amp; safety, content moderation, or platform policy? The line's open — swing on by.</p>
+  <div class="contact-list">
+    <div class="contact-row"><span class="k">EMAIL</span><a href="mailto:babybeece12@gmail.com">babybeece12@gmail.com</a></div>
+    <div class="contact-row"><span class="k">PHONE</span><span class="v">+91 81483 65607</span></div>
+    <div class="contact-row"><span class="k">LINKEDIN</span><a href="https://www.linkedin.com/in/baby-b-251669132/" target="_blank" rel="noopener">linkedin.com/in/baby-b-251669132</a></div>
+    <div class="contact-row"><span class="k">LOCATION</span><span class="v">Krishnagiri, Tamil Nadu, India</span></div>
+  </div>
+</section>
+
+<footer>YOUR FRIENDLY NEIGHBORHOOD TRUST &amp; SAFETY ANALYST &nbsp;·&nbsp; CASE CLOSED</footer>
+
+</body>
+</html>
